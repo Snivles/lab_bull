@@ -8,13 +8,12 @@
 unsigned char *log_sum(unsigned char *vecA, int lenA,unsigned char *vecB, int lenB) {
     if((lenA==lenB) && vecA && vecB ){
     unsigned char *result = NULL;
-    int ix = 0;
-    result = (unsigned char*)malloc(lenA + 1);
+    size_t size_byte = ((lenA - 1) / 8 + 1);
+    result = (unsigned char*)malloc(size_byte);
 
     if (result) {
-        for (int i = 0; i < ((lenA - 1) / 8 + 1); i++) {
-            result[i] = vecA[i] | vecB[i];}
-        result[ix] = '\0';}
+        for (size_t i = 0; i < size_byte; i++) {
+            result[i] = vecA[i] | vecB[i];}}
     return result;}
   return NULL;}
 

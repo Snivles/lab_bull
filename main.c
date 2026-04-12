@@ -52,7 +52,9 @@ unsigned char *sumMod2(unsigned char *vecA, int lenA,unsigned char *vecB, int le
     return result;}
   return NULL;}
 
-
+//Инверсия
+// 101001110
+// 010110001 (т е если встретили 1 то меняем на 0 и наоборот)
 unsigned char *invertor(unsigned char *vec, int len) {
     if (vec){
     unsigned char *result = NULL;

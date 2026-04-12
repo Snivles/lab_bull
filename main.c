@@ -53,7 +53,21 @@ unsigned char *sumMod2(unsigned char *vecA, int lenA,unsigned char *vecB, int le
   return NULL;}
 
 
+unsigned char *invertor(unsigned char *vec, int len) {
+    if (vec){
+    unsigned char *result = NULL;
+    size_t size_byte = ((len +7) / 8);
+    result = (unsigned char*)malloc(size_byte);
+    if (result) {
+        for (size_t i = 0; i < size_byte; i++) {
+            result[i] = ~vec[i];
 
+        if (i == size_byte && (len % 8 != 0)) { // очистка хвоста путем определения его длины сдвига маски и лог умножения
+            int ostat = len % 8;
+            unsigned char clean = (1 << ostat) - 1;
+            result[i] = result[i] & clean;}}}
+    return result;}
+    return NULL;}
 
 int main()
 {

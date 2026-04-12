@@ -69,6 +69,32 @@ unsigned char *invertor(unsigned char *vec, int len) {
     return result;}
     return NULL;}
 
+
+
+// установка k-того разряда
+// 110111 , хочу вместо 0 поставить 1 , тогда мне нужно сделать маску где я сдвину в ней одну 1 на k мест, т.e. 001000 применить сложение логи
+void set_bit_1(unsigned char *vec, size_t len,size_t k)
+{   if (k < len){
+    int byte = 0;
+    unsigned char mask = 1;
+    byte = k/8; //номер  ячейки
+    int bit = k%8; // номер разряда  в ячейке
+    mask = mask << bit;
+    vec[byte] = vec[byte] | mask;}
+}
+// сброс k-того разряда
+// 111111 хочу на том же месте убрать 1, тогда мне надо сделать маску где я сдвину в ней одну 1 на k мест, t.e 001000 инвертирую 110111
+// и сделаю лог умнож( ИЛИ это (искл или) но да ладно)
+void sbros_bit_1(unsigned char *vec, size_t len,size_t k)
+{   if (k < len){
+    int byte = 0;
+    unsigned char mask = 1;
+    byte = k/8; //номер  ячейки
+    int bit = k%8; // номер разряда  в ячейке
+    mask = mask << bit;
+    vec[byte] = vec[byte] ^ mask;}
+}
+
 int main()
 {
     printf("Hello World!\n");

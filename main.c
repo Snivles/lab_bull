@@ -135,8 +135,8 @@ char *convertLongBvToStr(unsigned char *vec, size_t sz){
                 mask = mask << 1;}}
         str[ix] = '\0';
       }
-    }
-  return str;
+  return str;}
+  return NULL;
 }
 
 

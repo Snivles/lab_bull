@@ -97,6 +97,26 @@ void sbros_bit_1(unsigned char *vec, size_t len,size_t k)
     vec[byte] = vec[byte] ^ mask;}
 }
 
+
+
+unsigned char *convertStrtoLongBv(char *str, int*cells){
+  if(str && cells){
+    int len = 0, ix = 0;
+    len = strlen(str);
+    *cells = ((len-1)/8 + 1);
+    unsigned char *vec = (unsigned char*)malloc(sizeof(unsigned char) * (*cells));
+    for (int i = 0; i < *cells; i++) {vec[i] = 0;}
+    for (int i = 0; i < *cells; i++)
+      {
+        for (int j = 0; j < 8 && (ix < len); j++){
+              vec[i] = vec[i] << 1;
+
+              if(str[ix] != '0'){
+                      vec[i] = vec[i] | 1;}
+              ix++;}}
+  return vec;}
+  return NULL;}
+
 int main()
 {
     printf("Hello World!\n");

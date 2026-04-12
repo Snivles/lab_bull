@@ -117,6 +117,31 @@ unsigned char *convertStrtoLongBv(char *str, int*cells){
   return vec;}
   return NULL;}
 
+
+char *convertLongBvToStr(unsigned char *vec, size_t sz){
+  int ix = 0;
+  unsigned char mask =1;
+  char* str = NULL;
+  if (vec){
+    int len = 8 * sz + 1;
+    str =(char*)malloc(len);
+    if (str){
+        for (size_t i = 0; i < sz; i++){
+            mask = 1;
+            for (int j = 0; j < 8 && (ix < len); j++){
+                if ((vec[i]&mask)!=0){str[ix] = '1';}
+                else{str[ix]='0';}
+                ix++;
+                mask = mask << 1;}}
+        str[ix] = '\0';
+      }
+    }
+  return str;
+}
+
+
+
+
 int main()
 {
     printf("Hello World!\n");

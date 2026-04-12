@@ -144,6 +144,10 @@ char *convertLongBvToStr(unsigned char *vec, size_t sz){
 
 int main()
 {
-    printf("Hello World!\n");
-    return 0;
+  char *strA = "10100111";
+  char *strB = "01011000";
+
+  int cellsA, cellsB;
+  unsigned char *vecA = convertStrtoLongBv(strA, &cellsA);
+  unsigned char *vecB = convertStrtoLongBv(strB, &cellsB);
 }

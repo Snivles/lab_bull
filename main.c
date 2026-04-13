@@ -125,7 +125,7 @@ char *convertLongBvToStr(unsigned char *vec, size_t sz){
   int ix = 0;
   unsigned char mask =1;
   char* str = NULL;
-  if (vec){
+  if (vec && sz){
     int len = 8 * sz + 1;
     str =(char*)malloc(len);
     if (str){
@@ -147,8 +147,17 @@ char *convertLongBvToStr(unsigned char *vec, size_t sz){
 
 int main()
 {
-  char *strA = "10100111"; // 8 бит
-  char *strB = "01011000"; // 8 бит
+  //char *strA = "10100111"; // 8 бит
+  //char *strB = "01011000"; // 8 бит
+
+  //char *strA = "101001111"; // 9 бит
+  //char *strB = "010110000"; // 9 бит
+
+  //char *strA = "g0f00das"; // 8 бит тест нужен чтобы показать, что на вход может поступать что угодно и все будет работать верно
+  //char *strB = "01011000"; // 8 бит
+
+  char *strA = "     0 0"; // 8 бит
+  char *strB = "00000000"; // 8 бит
 
   int cellsA, cellsB;
   unsigned char *vecA = convertStrtoLongBv(strA, &cellsA);
@@ -156,7 +165,7 @@ int main()
 
   int lenA = strlen(strA);
   int lenB = strlen(strB);
-
+  if (lenA <= 0 || lenB <= 0){printf("Error with size"); return 0;}
   unsigned char *result = log_sum(vecA, lenA, vecB, lenB);
   if (result){
     char *stroka = convertLongBvToStr(result, cellsA);
@@ -192,7 +201,19 @@ int main()
     free(stroka);
     stroka = NULL;}
 
+  set_bit_1(vecA, lenA,3);
+  if (vecA){
+    char *stroka = convertLongBvToStr(vecA, cellsA);
+    printf("%s \n", stroka);
+    free(stroka);
+    stroka = NULL;}
 
+  sbros_bit_1(vecA, lenA,3);
+  if (vecA){
+    char *stroka = convertLongBvToStr(vecA, cellsA);
+    printf("%s \n", stroka);
+    free(stroka);
+    stroka = NULL;}
 
   free(vecA);
   free(vecB);

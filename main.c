@@ -206,8 +206,8 @@ unsigned char *SdvigR(unsigned char *vec, int len, int n) {
 
 int main()
 {
-  char *strA = "1100110011100010"; // 8 бит
-  char *strB = "0101100000000000"; // 8 бит
+  char *strA = "110011"; // 6 бит
+  char *strB = "000000"; // 8 бит
 
   //char *strA = "101001111"; // 9 бит
   //char *strB = "010110000"; // 9 бит
@@ -227,8 +227,18 @@ int main()
 
   int lenA = strlen(strA);
   int lenB = strlen(strB);
-  if (lenA <= 0 || lenB <= 0){printf("Error with size"); return 0;}
+  if (lenA <= 0 || lenB <= 0 || lenA != lenB){printf("Error with size"); return 0;}
+
+
+
+
+
+
+
   unsigned char *result = log_sum(vecA, lenA, vecB, lenB);
+
+
+
   if (result){
     char *stroka = convertLongBvToStr(result, cellsA);
     printf("LOG_SUM %s \n", stroka);
@@ -244,6 +254,21 @@ int main()
     result = NULL;
     free(stroka);
     stroka = NULL;}
+
+
+  result = invertor(vecA, lenA);
+  if (result){
+    unsigned char *result2 = SdvigL(result, lenA,3);
+  if (result2){
+    char *stroka = convertLongBvToStr(result2, cellsA);
+    printf("kaskad %s \n", stroka);
+    free(stroka);}
+    free(result);
+    result = NULL;
+    free(result2);
+    result2 = NULL;}
+
+
 
   result = sumMod2(vecA, lenA, vecB, lenB);
   if (result){

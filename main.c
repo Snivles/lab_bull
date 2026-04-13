@@ -5,7 +5,7 @@
 // 101001110 - 1 вектор
 // 010110001 - 2 вектор
 // 111111111 - ответ(т е если в 1 векторе бит равен 1 , а в другом 1 или 0, то ставим 1)
-unsigned char *log_sum(unsigned char *vecA, int lenA,unsigned char *vecB, int lenB) {
+unsigned char *logSum(unsigned char *vecA, size_t lenA,unsigned char *vecB, size_t lenB) {
     if((lenA==lenB) && vecA && vecB ){
     unsigned char *result = NULL;
     size_t size_byte = ((lenA +7) / 8);
@@ -23,7 +23,7 @@ unsigned char *log_sum(unsigned char *vecA, int lenA,unsigned char *vecB, int le
 // 010110001 - 2 вектор
 // 000000000 - ответ(т е если в 1 векторе бит равен 1 , а в другом 1, то ставим 1 в других случаях 0) !! обратное искл или
 
-unsigned char *log_ymnojenie(unsigned char *vecA, int lenA,unsigned char *vecB, int lenB) {
+unsigned char *logMul(unsigned char *vecA, size_t lenA,unsigned char *vecB, size_t lenB) {
     if((lenA==lenB) && vecA && vecB ){
     unsigned char *result = NULL;
     size_t size_byte = ((lenA +7) / 8);
@@ -41,7 +41,7 @@ unsigned char *log_ymnojenie(unsigned char *vecA, int lenA,unsigned char *vecB, 
 // 101001110 - 1 вектор
 // 010110001 - 2 вектор
 // 111111111 - ответ(т е если в 1 векторе бит равен 1 , а в другом 0, то ставим 1)
-unsigned char *sumMod2(unsigned char *vecA, int lenA,unsigned char *vecB, int lenB) {
+unsigned char *sumMod2(unsigned char *vecA, size_t lenA,unsigned char *vecB, size_t lenB) {
     if((lenA==lenB) && vecA && vecB ){
     unsigned char *result = NULL;
     size_t size_byte = ((lenA +7) / 8);
@@ -56,7 +56,7 @@ unsigned char *sumMod2(unsigned char *vecA, int lenA,unsigned char *vecB, int le
 //Инверсия
 // 101001110
 // 010110001 (т е если встретили 1 то меняем на 0 и наоборот)
-unsigned char *invertor(unsigned char *vec, int len) {
+unsigned char *inversion(unsigned char *vec, size_t len) {
     if (vec){
     unsigned char *result = NULL;
     size_t size_byte = ((len +7) / 8);
@@ -78,7 +78,7 @@ unsigned char *invertor(unsigned char *vec, int len) {
 
 // установка k-того разряда
 // 110111 , хочу вместо 0 поставить 1 , тогда мне нужно сделать маску где я сдвину в ней одну 1 на k мест, т.e. 001000 применить сложение логи
-void set_bit_1(unsigned char *vec, size_t len,size_t k)
+void set1(unsigned char *vec, size_t len,size_t k)
 {   if (k < len && vec){
     int byte = 0;
     unsigned char mask = 1;
@@ -90,7 +90,7 @@ void set_bit_1(unsigned char *vec, size_t len,size_t k)
 // сброс k-того разряда
 // 111111 хочу на том же месте убрать 1, тогда мне надо сделать маску где я сдвину в ней одну 1 на k мест, t.e 001000 инвертирую 110111
 // и сделаю лог умнож( ИЛИ это (искл или) но да ладно)
-void sbros_bit_1(unsigned char *vec, size_t len,size_t k)
+void set0(unsigned char *vec, size_t len,size_t k)
 {   if (k < len && vec){
     int byte = 0;
     unsigned char mask = 1;
@@ -102,7 +102,7 @@ void sbros_bit_1(unsigned char *vec, size_t len,size_t k)
 
 
 
-unsigned char *convertStrtoLongBv(char *str, int*cells){
+unsigned char *convertStrtoLongBv(char *str, int *cells){
   if(str && cells){
     int len = 0, ix = 0;
     len = strlen(str);
@@ -114,7 +114,7 @@ unsigned char *convertStrtoLongBv(char *str, int*cells){
     for (int i = 0; i < *cells; i++)
       {
         mask = 1;
-        for (int j = 0; (j < 8) && (ix < len); j++){
+        for (size_t j = 0; (j < 8) && (ix < len); j++){
               if(str[ix] != '0'){
                       vec[i] = vec[i] | mask;}
               mask = mask << 1;
@@ -146,7 +146,7 @@ char *convertLongBvToStr(unsigned char *vec, size_t sz){
 }
 
 
-unsigned char *SdvigL(unsigned char *vec, int len, int n) {
+unsigned char *shiftLeft(unsigned char *vec, size_t len, size_t n) {
     if (!vec) return NULL;
     if (n >= len){return NULL;}
     size_t size_byte = ((len +7) / 8);
@@ -175,7 +175,7 @@ unsigned char *SdvigL(unsigned char *vec, int len, int n) {
     return result;
 }
 
-unsigned char *SdvigR(unsigned char *vec, int len, int n) {
+unsigned char *shiftRight(unsigned char *vec, size_t len, size_t n) {
     if (!vec) return NULL;
 
     size_t size_byte = ((len +7) / 8);
@@ -202,7 +202,22 @@ unsigned char *SdvigR(unsigned char *vec, int len, int n) {
         result[size_byte - 1] = result[size_byte - 1] & mask;}
     return result;}
 
-
+void printBV(unsigned char *vec, int size){
+    if(vec && size){
+        int byte = (7+size)/8; // байты
+        int ix = 0;
+        unsigned char mask =1;
+        for (int i = 0; i < byte;i++){
+              mask = 1;
+              for (int j = 0; (j<8) && (ix < size);j++){
+                       if ((vec[i]& mask) != 0){printf("1 \n");}
+                       else {printf("0 \n");}
+                       mask = mask << 1;
+                       ix++;
+}
+}
+}
+}
 
 int main()
 {
@@ -234,11 +249,10 @@ int main()
 
 
 
-
-  unsigned char *result = log_sum(vecA, lenA, vecB, lenB);
-
+  unsigned char *result = logSum(vecA, lenA, vecB, lenB);
 
 
+  printBV(result,lenA);
   if (result){
     char *stroka = convertLongBvToStr(result, cellsA);
     printf("LOG_SUM %s \n", stroka);
@@ -246,7 +260,8 @@ int main()
     result = NULL;
     free(stroka);
     stroka = NULL;}
-  result = log_ymnojenie(vecA, lenA, vecB, lenB);
+  result = logMul(vecA, lenA, vecB, lenB);
+ printBV(result,lenA);
   if (result){
     char *stroka = convertLongBvToStr(result, cellsA);
     printf(" LOG_YMNOJ %s \n", stroka);
@@ -256,9 +271,10 @@ int main()
     stroka = NULL;}
 
 
-  result = invertor(vecA, lenA);
+  result = inversion(vecA, lenA);
+ printBV(result,lenA);
   if (result){
-    unsigned char *result2 = SdvigL(result, lenA,3);
+    unsigned char *result2 = shiftLeft(result, lenA,3);
   if (result2){
     char *stroka = convertLongBvToStr(result2, cellsA);
     printf("kaskad %s \n", stroka);
@@ -271,6 +287,7 @@ int main()
 
 
   result = sumMod2(vecA, lenA, vecB, lenB);
+ printBV(result,lenA);
   if (result){
     char *stroka = convertLongBvToStr(result, cellsA);
     printf("SUM MOD2 %s \n", stroka);
@@ -279,7 +296,8 @@ int main()
     free(stroka);
     stroka = NULL;}
 
-  result = invertor(vecA, lenA);
+  result = inversion(vecA, lenA);
+ printBV(result,lenA);
   if (result){
     char *stroka = convertLongBvToStr(result, cellsA);
     printf("NOT %s \n", stroka);
@@ -290,7 +308,8 @@ int main()
 
 
 // Сдвиг влево
-  result = SdvigL(vecA, lenA, 3);
+  result = shiftLeft(vecA, lenA, 3);
+ printBV(result,lenA);
   if (result){
     char *stroka = convertLongBvToStr(result, cellsA);
     printf("SdvigLeft: %s \n", stroka);
@@ -300,7 +319,8 @@ int main()
     stroka = NULL;}
 
 // Сдвиг влево
-  result = SdvigR(vecA, lenA, 4);
+  result = shiftRight(vecA, lenA, 4);
+ printBV(result,lenA);
   if (result){
     char *stroka = convertLongBvToStr(result, cellsA);
     printf("SdvigRight: %s \n", stroka);
@@ -310,14 +330,14 @@ int main()
     stroka = NULL;}
 
 // установка k-то бита
-  set_bit_1(vecA, lenA,3);
+  set1(vecA, lenA,3);
   if (vecA){
     char *stroka = convertLongBvToStr(vecA, cellsA);
     printf("%s \n", stroka);
     free(stroka);
     stroka = NULL;}
 //сброс k-того бита
-  sbros_bit_1(vecA, lenA,3);
+  set0(vecA, lenA,3);
   if (vecA){
     char *stroka = convertLongBvToStr(vecA, cellsA);
     printf("%s \n", stroka);

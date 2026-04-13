@@ -105,15 +105,17 @@ unsigned char *convertStrtoLongBv(char *str, int*cells){
     int len = 0, ix = 0;
     len = strlen(str);
     *cells = (len + 7) / 8;
+    unsigned char mask = 1;
     unsigned char *vec = (unsigned char*)malloc(sizeof(unsigned char) * (*cells));
+    if (vec==NULL) {return NULL;}
     for (int i = 0; i < *cells; i++) {vec[i] = 0;}
     for (int i = 0; i < *cells; i++)
       {
-        for (int j = 0; j < 8 && (ix < len); j++){
-              vec[i] = vec[i] << 1;
-
+        mask = 1;
+        for (int j = 0; (j < 8) && (ix < len); j++){
               if(str[ix] != '0'){
-                      vec[i] = vec[i] | 1;}
+                      vec[i] = vec[i] | mask;}
+              mask = mask << 1;
               ix++;}}
   return vec;}
   return NULL;}

@@ -8,7 +8,7 @@
 unsigned char *logSum(unsigned char *vecA, size_t lenA,unsigned char *vecB, size_t lenB) {
     if((lenA==lenB) && vecA && vecB ){
     unsigned char *result = NULL;
-    size_t size_byte = ((lenA +7) / 8);
+    size_t size_byte = ((lenA - 1) / 8) + 1;
     result = (unsigned char*)malloc(size_byte);
     for (size_t i = 0; i < size_byte; i++) {result[i] = 0;}
     if (result) {
@@ -26,7 +26,7 @@ unsigned char *logSum(unsigned char *vecA, size_t lenA,unsigned char *vecB, size
 unsigned char *logMul(unsigned char *vecA, size_t lenA,unsigned char *vecB, size_t lenB) {
     if((lenA==lenB) && vecA && vecB ){
     unsigned char *result = NULL;
-    size_t size_byte = ((lenA +7) / 8);
+    size_t size_byte = ((lenA - 1) / 8) + 1;
     result = (unsigned char*)malloc(size_byte);
     for (size_t i = 0; i < size_byte; i++) {result[i] = 0;}
 
@@ -44,7 +44,7 @@ unsigned char *logMul(unsigned char *vecA, size_t lenA,unsigned char *vecB, size
 unsigned char *sumMod2(unsigned char *vecA, size_t lenA,unsigned char *vecB, size_t lenB) {
     if((lenA==lenB) && vecA && vecB ){
     unsigned char *result = NULL;
-    size_t size_byte = ((lenA +7) / 8);
+    size_t size_byte = ((lenA - 1) / 8) + 1;
     result = (unsigned char*)malloc(size_byte);
     for (size_t i = 0; i < size_byte; i++) {result[i] = 0;}
     if (result) {
@@ -59,7 +59,7 @@ unsigned char *sumMod2(unsigned char *vecA, size_t lenA,unsigned char *vecB, siz
 unsigned char *inversion(unsigned char *vec, size_t len) {
     if (vec){
     unsigned char *result = NULL;
-    size_t size_byte = ((len +7) / 8);
+    size_t size_byte = ((len - 1) / 8) + 1;
     result = (unsigned char*)malloc(size_byte);
     for (size_t i = 0; i < size_byte; i++) {result[i] = 0;}
     if (result) {
@@ -106,7 +106,7 @@ unsigned char *convertStrtoLongBv(char *str, int *cells){
   if(str && cells){
     int len = 0, ix = 0;
     len = strlen(str);
-    *cells = (len + 7) / 8;
+    *cells = ((len - 1) / 8) + 1;
     unsigned char mask = 1;
     unsigned char *vec = (unsigned char*)malloc(sizeof(unsigned char) * (*cells));
     if (vec==NULL) {return NULL;}
@@ -149,7 +149,7 @@ char *convertLongBvToStr(unsigned char *vec, size_t sz){
 unsigned char *shiftLeft(unsigned char *vec, size_t len, size_t n) {
     if (!vec) return NULL;
     if (n >= len){return NULL;}
-    size_t size_byte = ((len +7) / 8);
+    size_t size_byte = ((len - 1) / 8) + 1;
     unsigned char *result = NULL;
     result = (unsigned char*)malloc(size_byte);
     for (size_t i = 0; i < size_byte; i++) {result[i] = 0;}
@@ -178,7 +178,7 @@ unsigned char *shiftLeft(unsigned char *vec, size_t len, size_t n) {
 unsigned char *shiftRight(unsigned char *vec, size_t len, size_t n) {
     if (!vec) return NULL;
 
-    size_t size_byte = ((len +7) / 8);
+    size_t size_byte = ((len - 1) / 8) + 1;
     unsigned char *result = NULL;
     result = (unsigned char*)malloc(size_byte);
     for (size_t i = 0; i < size_byte; i++) {result[i] = 0;}
@@ -204,7 +204,7 @@ unsigned char *shiftRight(unsigned char *vec, size_t len, size_t n) {
 
 void printBV(unsigned char *vec, int size){
     if(vec && size){
-        int byte = (7+size)/8; // байты
+        int byte = ((size - 1) / 8) + 1; // байты
         int ix = 0;
         unsigned char mask =1;
         for (int i = 0; i < byte;i++){
